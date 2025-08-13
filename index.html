@@ -3,348 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Login with Supabase</title>
-    
-    <!-- Supabase SDK -->
+    <title>Login - Your Site</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        .auth-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        h2 {
-            margin-bottom: 1.5rem;
-            text-align: center;
-            color: #333;
-        }
-        
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #555;
-            font-weight: 500;
-        }
-        
-        input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #4CAF50;
-        }
-        
-        button {
-            width: 100%;
-            padding: 0.75rem;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        button:hover {
-            background: #45a049;
-        }
-        
-        button:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
-        }
-        
-        .toggle-form {
-            text-align: center;
-            margin-top: 1rem;
-            color: #666;
-        }
-        
-        .toggle-form a {
-            color: #4CAF50;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .toggle-form a:hover {
-            text-decoration: underline;
-        }
-        
-        .message {
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border-radius: 5px;
-            text-align: center;
-            display: none;
-        }
-        
-        .error {
-            background: #ffebee;
-            color: #c62828;
-            border: 1px solid #ef5350;
-        }
-        
-        .success {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #66bb6a;
-        }
-        
-        .user-info {
-            background: #e3f2fd;
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            display: none;
-        }
-        
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #4CAF50;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-left: 10px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
 </head>
 <body>
-    <div class="auth-container">
-        <!-- User info (shown when logged in) -->
-        <div id="userInfo" class="user-info">
-            <h3>Welcome!</h3>
-            <p>Email: <span id="userEmail"></span></p>
-            <button onclick="signOut()">Sign Out</button>
-        </div>
-        
-        <!-- Auth forms (shown when logged out) -->
-        <div id="authForms">
-            <h2 id="formTitle">Create Account</h2>
+    <div class="auth-page">
+        <div class="auth-container">
+            <h1 class="site-title">Welcome</h1>
             
-            <div id="message" class="message"></div>
-            
-            <form id="authForm">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        required 
-                        autocomplete="email"
-                        placeholder="your@email.com"
-                    >
-                </div>
+            <div id="authForms">
+                <h2 id="formTitle">Sign In</h2>
                 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        required 
-                        autocomplete="current-password"
-                        placeholder="Minimum 6 characters"
-                        minlength="6"
-                    >
-                </div>
+                <div id="message" class="message"></div>
                 
-                <button type="submit" id="submitBtn">Create Account</button>
-            </form>
-            
-            <div class="toggle-form">
-                <span id="toggleText">Already have an account?</span>
-                <a href="#" onclick="toggleForm(event)">Sign In</a>
+                <form id="authForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required 
+                            autocomplete="email"
+                            placeholder="your@email.com"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required 
+                            autocomplete="current-password"
+                            placeholder="Minimum 6 characters"
+                            minlength="6"
+                        >
+                    </div>
+                    
+                    <button type="submit" id="submitBtn">Sign In</button>
+                </form>
+                
+                <div class="toggle-form">
+                    <span id="toggleText">Don't have an account?</span>
+                    <a href="#" onclick="toggleForm(event)">Create Account</a>
+                </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // IMPORTANT: Replace these with your actual Supabase credentials
-        // Get these from: https://app.supabase.com/project/YOUR_PROJECT/settings/api
-        const SUPABASE_URL = 'https://nmxlkghuetwdlyxiyqqz.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5teGxrZ2h1ZXR3ZGx5eGl5cXF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxMDQ3ODcsImV4cCI6MjA3MDY4MDc4N30.dCKdVI2HRDLmxE8XnuZGrr6PPRw45cJCBVcD26b7Juo';
-        
-        // Initialize Supabase client
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
-        // Form elements
-        const authForm = document.getElementById('authForm');
-        const formTitle = document.getElementById('formTitle');
-        const submitBtn = document.getElementById('submitBtn');
-        const toggleText = document.getElementById('toggleText');
-        const message = document.getElementById('message');
-        const authForms = document.getElementById('authForms');
-        const userInfo = document.getElementById('userInfo');
-        const userEmail = document.getElementById('userEmail');
-        
-        // Track current form mode
-        let isSignUp = true;
-        
-        // Check if user is already logged in
-        checkAuth();
-        
-        async function checkAuth() {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user) {
-                showUserInfo(user);
-            }
-        }
-        
-        // Handle form submission
-        authForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = isSignUp ? 'Creating Account...' : 'Signing In...';
-            hideMessage();
-            
-            try {
-                let result;
-                
-                if (isSignUp) {
-                    // Sign up new user
-                    result = await supabase.auth.signUp({
-                        email,
-                        password,
-                        options: {
-                            emailRedirectTo: window.location.origin
-                        }
-                    });
-                } else {
-                    // Sign in existing user
-                    result = await supabase.auth.signInWithPassword({
-                        email,
-                        password
-                    });
-                }
-                
-                if (result.error) throw result.error;
-                
-                if (isSignUp && result.data.user && !result.data.session) {
-                    showMessage('Check your email to confirm your account!', 'success');
-                    authForm.reset();
-                } else if (result.data.user) {
-                    showMessage('Success! Logging you in...', 'success');
-                    setTimeout(() => {
-                        showUserInfo(result.data.user);
-                    }, 1000);
-                }
-                
-            } catch (error) {
-                showMessage(error.message || 'An error occurred', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = isSignUp ? 'Create Account' : 'Sign In';
-            }
-        });
-        
-        // Toggle between sign up and sign in
-        function toggleForm(e) {
-            e.preventDefault();
-            isSignUp = !isSignUp;
-            
-            if (isSignUp) {
-                formTitle.textContent = 'Create Account';
-                submitBtn.textContent = 'Create Account';
-                toggleText.textContent = 'Already have an account?';
-                document.querySelector('.toggle-form a').textContent = 'Sign In';
-            } else {
-                formTitle.textContent = 'Sign In';
-                submitBtn.textContent = 'Sign In';
-                toggleText.textContent = "Don't have an account?";
-                document.querySelector('.toggle-form a').textContent = 'Create Account';
-            }
-            
-            hideMessage();
-            authForm.reset();
-        }
-        
-        // Show user info when logged in
-        function showUserInfo(user) {
-            authForms.style.display = 'none';
-            userInfo.style.display = 'block';
-            userEmail.textContent = user.email;
-        }
-        
-        // Sign out
-        async function signOut() {
-            try {
-                const { error } = await supabase.auth.signOut();
-                if (error) throw error;
-                
-                userInfo.style.display = 'none';
-                authForms.style.display = 'block';
-                showMessage('Signed out successfully', 'success');
-                authForm.reset();
-            } catch (error) {
-                showMessage(error.message || 'Error signing out', 'error');
-            }
-        }
-        
-        // Message handling
-        function showMessage(text, type) {
-            message.textContent = text;
-            message.className = `message ${type}`;
-            message.style.display = 'block';
-        }
-        
-        function hideMessage() {
-            message.style.display = 'none';
-        }
-        
-        // Listen for auth state changes
-        supabase.auth.onAuthStateChange((event, session) => {
-            if (event === 'SIGNED_IN' && session) {
-                showUserInfo(session.user);
-            } else if (event === 'SIGNED_OUT') {
-                userInfo.style.display = 'none';
-                authForms.style.display = 'block';
-            }
-        });
-    </script>
+    
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
